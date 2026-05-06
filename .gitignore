@@ -10,6 +10,7 @@ backend/mysql/.env
 backend/mysql/.env.test
 backend/chromadb/.env
 backend/chromadb/.env.test
+backend/redis/.env
 backend/.env
 backend/.env.test
 backend/src/generated

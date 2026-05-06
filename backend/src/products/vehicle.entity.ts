@@ -1,3 +1,4 @@
+
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToOne, OneToMany, JoinColumn } from 'typeorm';
 import { Model } from './model.entity';
 import { Listing } from './listing.entity';

@@ -1,6 +1,7 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, ManyToOne, JoinColumn } from 'typeorm';
+
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, OneToOne, ManyToOne, JoinColumn } from 'typeorm';
 import { Vehicle } from './vehicle.entity';
-import { Store } from './store.entity';
+import { Link } from '../scraper/links.entity';
 
 @Entity('listings')
 export class Listing {
@@ -45,8 +46,8 @@ export class Listing {
     @JoinColumn({ name: 'vehicle_id' })
     vehicle!: Vehicle;
 
-    @ManyToOne(() => Store, (store) => store.listings)
-    @JoinColumn({ name: 'store_id' })
-    store!: Store;
+    @OneToOne(() => Link, (link) => link.listing)
+    @JoinColumn()
+    link!: Link;
 
 }

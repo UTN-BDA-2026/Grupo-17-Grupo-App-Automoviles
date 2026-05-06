@@ -1,5 +1,6 @@
+
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, OneToMany } from 'typeorm';
-import { Listing } from './listing.entity';
+import { Link } from '../scraper/links.entity';
 
 @Entity('stores')
 export class Store {
@@ -19,7 +20,7 @@ export class Store {
     @UpdateDateColumn({ type: 'timestamp' })
     updated_at!: Date;
 
-    @OneToMany(() => Listing, (listing) => listing.store)
-    listings!: Listing[];
+    @OneToMany(() => Link, (links) => links.store)
+    links!: Link[];
 
 }
