@@ -2,7 +2,8 @@
 import { Injectable, Logger } from '@nestjs/common'
 import { Cron } from '@nestjs/schedule'
 import { Queue } from 'bullmq'
-import { InjectQueue } from '@nestjs/bullmq';
+import { InjectQueue } from '@nestjs/bullmq'
+import { DISCOVER_URLS } from './constants/discorver-urls'
 
 @Injectable()
 export class SchedulerService {
@@ -16,13 +17,17 @@ export class SchedulerService {
 
     @Cron('0 0 10 * * *')
     async discover(){
-
-        const url = 'https://autos.mercadolibre.com.ar/ford/f-100' 
-
-        await this.discoverQueue.add('discover-vehicles', { url }, {
-            attempts: 3, 
-            backoff: 5000 
-        })
+        
+        for (const url of DISCOVER_URLS) {
+            try {
+                await this.discoverQueue.add('discover-vehicles', { url }, {
+                    attempts: 3, 
+                    backoff: 5000 
+                })
+            } catch (error : any) {
+                this.logger.error(`Error al agregar job para URL ${url}:`, error)
+            }
+        }
 
     }
 
