@@ -21,7 +21,7 @@ export class Link {
     @Column({ type: 'enum', enum: LinkStatus, nullable: false})
     status!: LinkStatus
 
-    @Column({ type: 'text', nullable: false})
+    @Column({ type: 'text', nullable: false, unique: true})
     url!: string;
 
     @CreateDateColumn({ type: 'timestamp' })
