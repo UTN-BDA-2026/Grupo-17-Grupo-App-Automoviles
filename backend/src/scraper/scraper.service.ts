@@ -47,18 +47,23 @@ export class ScraperService {
 
         const { userAgent, headers } = this.getRandomUserAgent()
 
-        const browser = await chromium.launch({ headless: true })
+        const browser = await chromium.launch({ 
+            headless: true,
+            args: [
+                '--disable-blink-features=AutomationControlled'
+            ]
+        })
+
         const context = await browser.newContext({
             userAgent,
             extraHTTPHeaders: headers
         })
 
         const page = await context.newPage()
-        await page.goto(url)
+        await page.goto(url, { waitUntil: 'networkidle' })
 
         const selectorCard = 'tr.andes-table__row'
 
-        await page.waitForLoadState('networkidle')
         await page.waitForTimeout(Math.random() * (5000 - 2000) + 2000)
         await page.waitForSelector(selectorCard, {timeout: 100000})
         await page.mouse.wheel(0, 500)
@@ -90,14 +95,20 @@ export class ScraperService {
 
         const { userAgent, headers } = this.getRandomUserAgent()
 
-        const browser = await chromium.launch({ headless: true })
+        const browser = await chromium.launch({ 
+            headless: true,
+            args: [
+                '--disable-blink-features=AutomationControlled'
+            ]
+        })
+
         const context = await browser.newContext({
             userAgent,
             extraHTTPHeaders: headers
         })
 
         const page = await context.newPage()
-        await page.goto(url)
+        await page.goto(url, { waitUntil: 'networkidle' })
 
         const selectorCard = 'li.ui-search-layout__item'
 
