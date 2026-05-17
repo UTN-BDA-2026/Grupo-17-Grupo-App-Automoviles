@@ -1,6 +1,6 @@
 
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, OneToMany } from 'typeorm';
-import { Link } from '../scraper/links.entity';
+import { Link } from '../scraper/link.entity';
 
 @Entity('stores')
 export class Store {
