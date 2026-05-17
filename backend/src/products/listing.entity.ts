@@ -1,7 +1,7 @@
 
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, OneToOne, ManyToOne, JoinColumn } from 'typeorm';
 import { Vehicle } from './vehicle.entity';
-import { Link } from '../scraper/links.entity';
+import { Link } from '../scraper/link.entity';
 
 @Entity('listings')
 export class Listing {
