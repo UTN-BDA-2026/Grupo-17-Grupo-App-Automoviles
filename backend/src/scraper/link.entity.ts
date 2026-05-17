@@ -1,7 +1,7 @@
 
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToOne, OneToOne, JoinColumn } from 'typeorm';
-import { Listing } from '../products/listing.entity';
-import { Store } from '../products/store.entity';
+import { Listing } from '../products/models/listing.entity';
+import { Store } from '../products/models/store.entity';
 
 export enum LinkStatus {
     PENDIENTE = 'Pendiente',
