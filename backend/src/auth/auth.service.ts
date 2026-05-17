@@ -1,13 +1,14 @@
 
 import { Injectable, UnauthorizedException, InternalServerErrorException, OnModuleInit, OnModuleDestroy } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { createClient as createSupabaseClient, SupabaseClient } from '@supabase/supabase-js';
+import { createClient as createSupabaseClient, SupabaseClient } from '@supabase/supabase-js'
 import { createClient, RedisClientType } from 'redis';
 
 @Injectable()
 export class AuthService implements OnModuleInit, OnModuleDestroy {
-    private supabaseClient: SupabaseClient;
-    private redisClient: RedisClientType;
+    
+    private supabaseClient!: SupabaseClient;
+    private redisClient!: RedisClientType;
 
     constructor(private configService: ConfigService) { }
 
@@ -18,7 +19,11 @@ export class AuthService implements OnModuleInit, OnModuleDestroy {
         );
 
         this.redisClient = createClient({
-            url: this.configService.get<string>('REDIS_URL')
+            socket: {
+                host: this.configService.get<string>('REDIS_HOST'),
+                port: this.configService.get<number>('REDIS_PORT'),
+            },
+            password: this.configService.get<string>('REDIS_PASSWORD')
         });
 
         this.redisClient.on('error', (err) => {
@@ -33,7 +38,7 @@ export class AuthService implements OnModuleInit, OnModuleDestroy {
         await this.redisClient.quit();
     }
 
-    async register(email: string, password: string) {
+    public async register(email: string, password: string) {
         console.log('Intento de registro para:', email);
         const { data, error } = await this.supabaseClient.auth.signUp({
             email: email,
@@ -50,7 +55,7 @@ export class AuthService implements OnModuleInit, OnModuleDestroy {
         };
     }
 
-    async login(email: string, password: string) {
+    public async login(email: string, password: string) {
         console.log('Intento de login para:', email);
         const { data, error } = await this.supabaseClient.auth.signInWithPassword({
             email: email,
@@ -65,7 +70,7 @@ export class AuthService implements OnModuleInit, OnModuleDestroy {
         return data.session;
     }
 
-    async refresh(refreshToken: string) {
+    public async refresh(refreshToken: string) {
         console.log('Refrescando token...');
         const { data, error } = await this.supabaseClient.auth.refreshSession({
             refresh_token: refreshToken,
@@ -78,7 +83,7 @@ export class AuthService implements OnModuleInit, OnModuleDestroy {
         return data.session;
     }
 
-    async logout(token: string) {
+    public async logout(token: string) {
         const accessToken = token.split(' ')[1];
 
         try {
@@ -104,7 +109,7 @@ export class AuthService implements OnModuleInit, OnModuleDestroy {
         }
     }
 
-    async passwordRecovery(email: string) {
+    public async passwordRecovery(email: string) {
         const { error } = await this.supabaseClient.auth.resetPasswordForEmail(email);
 
         if (error) {
