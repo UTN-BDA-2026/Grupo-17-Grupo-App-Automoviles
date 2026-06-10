@@ -1,6 +1,6 @@
 
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, ManyToOne, JoinColumn } from "typeorm";
-import { ChatSession } from "./chatSession.entity";
+import { ChatSession } from "./chat_session.entity";
 
 export enum MessageRol {
     ASSISTANT = 'assistant',
