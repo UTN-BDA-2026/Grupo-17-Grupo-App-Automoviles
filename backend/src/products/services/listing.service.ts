@@ -1,19 +1,19 @@
 
 import { Injectable, NotFoundException } from "@nestjs/common"
 import { Listing } from "../models/listing.entity"
-import { dataSource } from "../../database/typeorm.config"
+import { InjectRepository } from "@nestjs/typeorm"
 import { Repository, QueryDeepPartialEntity } from "typeorm"
+import { CreateListingDTO } from "../dto/listing.dto"
 
 @Injectable()
 export class ListingService {
 
-    private readonly repository : Repository<Listing>
+    constructor(
+        @InjectRepository(Listing)
+        private readonly repository: Repository<Listing>
+    ) {}
 
-    constructor(){
-        this.repository = dataSource.getRepository(Listing)
-    }
-
-    public async get(pageNumber: number = 1, pageSize: number = 10) : Promise<{ data: Listing[], total: number, page: number, pageSize: number }> {
+    public async get(pageNumber: number = 1, pageSize: number = 20) : Promise<{ data: Listing[], total: number, page: number, pageSize: number }> {
         const skip = (pageNumber - 1) * pageSize
 
         const [data, total] = await this.repository
@@ -52,7 +52,7 @@ export class ListingService {
         return listing
     }
 
-    public async create(listing: Listing) : Promise<Listing> {
+    public async create(listing: CreateListingDTO) : Promise<Listing> {
         
         const nuevo = this.repository.create(listing)
         return await this.repository.save(nuevo)

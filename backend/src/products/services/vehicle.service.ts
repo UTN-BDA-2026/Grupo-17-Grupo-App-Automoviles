@@ -1,17 +1,17 @@
 
 import { Injectable, NotFoundException } from "@nestjs/common"
 import { Vehicle } from "../models/vehicle.entity"
-import { dataSource } from "../../database/typeorm.config"
+import { InjectRepository } from "@nestjs/typeorm"
+import { CreateVehicleDTO } from "../dto/vehicle.dto"
 import { Repository, QueryDeepPartialEntity } from "typeorm"
 
 @Injectable()
-export class ModelService {
+export class VehicleService {
 
-    private readonly repository : Repository<Vehicle>
-
-    constructor(){
-        this.repository = dataSource.getRepository(Vehicle)
-    }
+    constructor(
+        @InjectRepository(Vehicle)
+        private readonly repository: Repository<Vehicle>
+    ) {}
 
     public async get() : Promise<Vehicle[]> {
         return await this.repository.find()
@@ -24,7 +24,24 @@ export class ModelService {
         })
     }
 
-    public async create(vehicle: Vehicle) : Promise<Vehicle> {
+    public async getByYearAndModelAndVersion(year: number, model_id: string, version: string) : Promise<Vehicle | null> {
+
+        return await this.repository.findOneBy({
+            year: year,
+            model_id: model_id,
+            version: version
+        })
+    }
+
+    public async getByVersion(version: string) : Promise<Vehicle | null> {
+
+        return await this.repository.findOneBy({
+            version: version
+        })
+    }
+
+
+    public async create(vehicle: CreateVehicleDTO) : Promise<Vehicle> {
         
         const nuevo = this.repository.create(vehicle)
         return await this.repository.save(nuevo)

@@ -8,9 +8,9 @@ export class ProductsController {
     constructor(private readonly listingService: ListingService){}
 
     @Get()
-    public async getListing(
+    public async get (
         @Query('pageNumber', new DefaultValuePipe(1), ParseIntPipe) pageNumber: number,
-        @Query('pageSize', new DefaultValuePipe(10), ParseIntPipe) pageSize: number
+        @Query('pageSize', new DefaultValuePipe(20), ParseIntPipe) pageSize: number
     ) {
 
         const result = this.listingService.get(pageNumber, pageSize)
@@ -19,7 +19,7 @@ export class ProductsController {
     }
 
     @Get('/:id')
-    public async getListingById(@Param('id', new ParseUUIDPipe({errorHttpStatusCode: 400})) id : string) {
+    public async getById(@Param('id', new ParseUUIDPipe({errorHttpStatusCode: 400})) id : string) {
 
         const result = this.listingService.getById(id)
         return result 
