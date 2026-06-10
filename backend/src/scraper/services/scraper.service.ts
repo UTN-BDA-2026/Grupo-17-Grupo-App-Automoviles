@@ -1,6 +1,7 @@
 
 import { Injectable } from '@nestjs/common'
 import { chromium } from 'playwright'
+import { LinkInput } from '../interfaces/link_input.dto';
 
 @Injectable()
 export class ScraperService {
@@ -60,15 +61,16 @@ export class ScraperService {
         })
 
         const page = await context.newPage()
-        await page.goto(url, { waitUntil: 'networkidle' })
 
-        const selectorCard = 'tr.andes-table__row'
+            await page.goto(url, { waitUntil: 'networkidle' })
 
-        await page.waitForTimeout(Math.random() * (5000 - 2000) + 2000)
-        await page.waitForSelector(selectorCard, {timeout: 100000})
-        await page.mouse.wheel(0, 500)
+            const selectorCard = 'tr.andes-table__row'
 
-        const technicalSheet = await page.locator(selectorCard).evaluateAll((rows) => {
+            await page.waitForTimeout(Math.random() * (5000 - 2000) + 2000)
+            await page.waitForSelector(selectorCard, {timeout: 100000})
+            await page.mouse.wheel(0, 500)
+
+            const technicalSheet = await page.locator(selectorCard).evaluateAll((rows) => {
 
             const data = {}
 
@@ -83,15 +85,28 @@ export class ScraperService {
 
             return data
         })
-        
+
+        const selectorPriceCurrency = 'span.andes-money-amount__currency-symbol'
+        await page.waitForSelector(selectorPriceCurrency, {timeout: 50000})
+        const moneda = await page.locator(selectorPriceCurrency).first().innerText()
+
+        const selectorPriceNumber = 'span.andes-money-amount__fraction'
+        await page.waitForSelector(selectorPriceNumber, {timeout: 50000})
+        const precio = await page.locator(selectorPriceNumber).first().innerText()
+
         await page.close()
         await browser.close()
 
-        return technicalSheet
+        return {
+            precio,
+            moneda,
+            ...technicalSheet,
+            url
+        }
 
     }
 
-    public async discoverVehicles(url: string) : Promise<object[]> {
+    public async discoverVehicles(url: string) : Promise<LinkInput[]> {
 
         const { userAgent, headers } = this.getRandomUserAgent()
 
@@ -116,7 +131,7 @@ export class ScraperService {
         await page.waitForSelector(selectorCard)
         await page.mouse.wheel(0, 500)
 
-        const productos = await page.locator(selectorCard).evaluateAll((elementos) => {
+        const productos: LinkInput[] = await page.locator(selectorCard).evaluateAll((elementos) => {
             
             return elementos.map(el => {
                 const enlaces = Array.from(el.querySelectorAll('a'))
@@ -130,7 +145,7 @@ export class ScraperService {
         await page.close()
         await browser.close()
 
-        return productos
+        return productos 
 
     }
 
