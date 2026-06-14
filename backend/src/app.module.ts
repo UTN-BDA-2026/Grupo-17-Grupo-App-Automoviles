@@ -4,6 +4,7 @@ import { BullModule } from '@nestjs/bullmq';
 import { ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config'
+import { AuthModule } from './auth/auth.module';
 import { ProductsModule } from './products/products.module';
 import { UsersModule } from './users/users.module';
 import { ChatModule } from './chat/chat.module';
@@ -32,6 +33,7 @@ import { SchedulerModule } from './scheduler/scheduler.module';
       ...dataSourceOptions,
       autoLoadEntities: true,
     }),
+    AuthModule,
     ProductsModule,
     UsersModule,
     ChatModule,
