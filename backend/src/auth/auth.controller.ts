@@ -1,35 +1,41 @@
 
 import { Controller, Post, Body, Headers, UnauthorizedException } from '@nestjs/common';
 import { AuthService } from './auth.service';
+import { RegisterDto } from './dto/register.dto';
+import { LoginDto } from './dto/login.dto';
+import { RefreshDto } from './dto/refresh.dto';
+import { PasswordRecoveryDto } from './dto/password-recovery.dto';
 
-@Controller('api/auth') 
+@Controller('api/auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+    constructor(private readonly authService: AuthService) {}
 
-  @Post('register')
-  async register(@Body() body: any) {
-    return this.authService.register(body.email, body.password);
-  }
+    @Post('register')
+    async register(@Body() dto: RegisterDto) {
+        return this.authService.register(dto.email, dto.password);
+    }
 
-  @Post('login')
-  async login(@Body() body: any) {
-    return this.authService.login(body.email, body.password);
-  }
+    @Post('login')
+    async login(@Body() dto: LoginDto) {
+        return this.authService.login(dto.email, dto.password);
+    }
 
-  @Post('refresh')
-  async refresh(@Body() body: any) {
-    return this.authService.refresh(body.refreshToken);
-  }
+    @Post('refresh')
+    async refresh(@Body() dto: RefreshDto) {
+        return this.authService.refresh(dto.refreshToken);
+    }
 
-  @Post('logout')
-  async logout(@Headers('authorization') authHeader: string) {
-    if (!authHeader) throw new UnauthorizedException('Token no provisto');
-    const token = authHeader.split(' ')[1]; 
-    return this.authService.logout(token);
-  }
+    @Post('logout')
+    async logout(@Headers('authorization') authHeader: string) {
+        if (!authHeader?.startsWith('Bearer ')) {
+            throw new UnauthorizedException('Token no provisto');
+        }
+        const token = authHeader.split(' ')[1];
+        return this.authService.logout(token);
+    }
 
-  @Post('password-recovery')
-  async passwordRecovery(@Body() body: any) {
-    return this.authService.passwordRecovery(body.email);
-  }
+    @Post('password-recovery')
+    async passwordRecovery(@Body() dto: PasswordRecoveryDto) {
+        return this.authService.passwordRecovery(dto.email);
+    }
 }
