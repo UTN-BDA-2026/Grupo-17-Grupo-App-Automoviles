@@ -25,8 +25,13 @@ export class SchedulerService {
     public async discover(){
 
         const { base, name, links } = DISCOVER_URLS.mercado_libre
-        
-        for (const url of links) {
+        const remainingLinks = [...links]
+
+        while (remainingLinks.length > 0) {
+
+            const randomIndex = Math.floor(Math.random() * remainingLinks.length);
+            const url = remainingLinks[randomIndex];
+
             try {
                 await this.discoverQueue.add('discover-vehicles', { url, name, base }, {
                     attempts: 3, 
@@ -36,6 +41,9 @@ export class SchedulerService {
                 this.logger.log('Job has been added in disconver vehicles queue')
             } catch (error : any) {
                 this.logger.error(`Error adding job to discover URL ${url}:`, error.message)
+            } finally {
+                // Remover la URL del array de URLs pendientes después de procesarla
+                remainingLinks.splice(randomIndex, 1);
             }
         }
 
