@@ -4,6 +4,7 @@ import { ScheduleModule } from '@nestjs/schedule'
 import { SchedulerService } from './scheduler.service'
 import { BullModule } from '@nestjs/bullmq'
 import { ScraperModule } from '../scraper/scraper.module'
+import { SchedulerController } from './scheduler.controller';
 
 @Module({
     imports: [
@@ -19,6 +20,7 @@ import { ScraperModule } from '../scraper/scraper.module'
     ],
     providers: [
         SchedulerService,
-    ]
+    ],
+    controllers: [SchedulerController]
 })
 export class SchedulerModule { }

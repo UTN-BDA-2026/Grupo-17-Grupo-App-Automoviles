@@ -1,7 +1,7 @@
 
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToOne, OneToOne, JoinColumn } from 'typeorm';
-import { Listing } from '../products/listing.entity';
-import { Store } from '../products/store.entity';
+import { Listing } from '../../products/models/listing.entity';
+import { Store } from '../../products/models/store.entity';
 
 export enum LinkStatus {
     PENDIENTE = 'Pendiente',
@@ -21,7 +21,7 @@ export class Link {
     @Column({ type: 'enum', enum: LinkStatus, nullable: false})
     status!: LinkStatus
 
-    @Column({ type: 'text', nullable: false, unique: true})
+    @Column({ type: 'varchar', length: 255, nullable: false, unique: true})
     url!: string;
 
     @CreateDateColumn({ type: 'timestamp' })

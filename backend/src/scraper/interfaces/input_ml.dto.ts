@@ -1,0 +1,93 @@
+
+import { CreateBrandDTO } from '../../products/dto/brand.dto';
+import { CreateModelDTO } from '../../products/dto/model.dto';
+import { CreateVehicleDTO } from '../../products/dto/vehicle.dto';
+import { CreateListingDTO } from '../../products/dto/listing.dto';
+import { Link } from '../models/link.entity'
+
+export interface VehicleInputDTO {
+  precio: string
+  moneda: string
+  Marca: string
+  Modelo: string
+  'Año': string
+  'Versión'?: string
+  Color: string
+  'Tipo de combustible': string
+  Puertas: string
+  'Transmisión': string
+  Motor: string
+  'Tipo de carrocería'?: string
+  'Con cámara de retroceso'?: string
+  'Kilómetros': string
+  'Llantas de aleación'?: string
+  'Techo solar eléctrico retráctil'?: string
+  'AM/FM'?: string
+  'Entrada auxiliar'?: string
+  Bluetooth?: string
+  'Reproductor de MP3'?: string
+  'Entrada USB'?: string
+  'CD'?: string
+  'DVD'?: string
+  'Tapizado de cuero'?: string
+  'Piloto automático'?: string
+  'Alarma de luces encendidas'?: string
+  'Computadora de abordo'?: string
+  'Cristales eléctricos'?: string
+  'Sensor de lluvia'?: string
+  'Apertura remota de baúl'?: string
+  'Comando remoto para radio en el volante'?: string
+  'Cierre automático de vidrios'?: string
+  'Limpia/lava luneta'?: string
+  'Cierre centralizado de puertas'?: string
+  'Único dueño'?: string
+  'Inspección vehicular'?: string
+  'Aire acondicionado'?: string
+  'Porta vasos'?: string
+  'Dirección': string
+  Alarma?: string
+  'Control de tracción'?: string
+  'Capacidad de personas'?: string
+  Potencia?: string
+  'Distancia entre ejes'?: string
+  'Capacidad del tanque'?: string
+  'Válvulas por cilindro'?: string
+  'Frenos ABS'?: string
+  'Airbag conductor'?: string
+  'Faros con regulación automática'?: string
+  'Sensor de estacionamiento'?: string
+  'Airbag para conductor y pasajero'?: string
+  'Faros antinieblas traseros'?: string
+  'Desempañador trasero'?: string
+  'Tercera luz de freno led'?: string
+  'Control de estabilidad'?: string
+  Climatizador?: string
+  'Tracción ASR'?: string
+  'Largo x Altura x Ancho'?: string
+  'Con garantía de fábrica'?: string
+  'Con garantía mecánica'?: string,
+  'Precio negociable'?: string
+  'Acepta permuta'?: string
+  'Entrega a domicilio'?: string
+  'Tours virtuales'?: string
+  'Test drive a domicilio'?: string
+  'Blindado'?: string,
+  'Porta equipaje en techo'?: string
+  'Soporte para rueda de auxilio'?: string
+  'Defensa delantera'?: string
+  'Tipo de batería'?: string
+  'Capacidad de la batería'?: string
+  'Tiempo de carga'?: string
+  'Tipo de cargador'?: string
+  'Autonomia de la batería'?: string
+  url: string
+}
+
+
+export interface VehicleOutputDTO {
+  brand: CreateBrandDTO,
+  model: CreateModelDTO,
+  vehicle: CreateVehicleDTO,
+  listing: CreateListingDTO,
+  link: Partial<Link>
+}

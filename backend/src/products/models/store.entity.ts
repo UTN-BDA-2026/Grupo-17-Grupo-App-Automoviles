@@ -1,6 +1,6 @@
 
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, OneToMany } from 'typeorm';
-import { Link } from '../scraper/link.entity';
+import { Link } from '../../scraper/models/link.entity';
 
 @Entity('stores')
 export class Store {
@@ -11,7 +11,7 @@ export class Store {
     @Column({ type: 'varchar', length: 100 })
     name!: string;
 
-    @Column({ type: 'varchar', length: 255 })
+    @Column({ type: 'varchar', length: 255, unique: true })
     base_url!: string;
 
     @CreateDateColumn({ type: 'timestamp' })

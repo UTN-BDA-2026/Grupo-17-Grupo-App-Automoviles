@@ -17,7 +17,7 @@ export class Model {
     @Column({type: 'uuid', nullable: false})
     brand_id!: string
 
-    @Column({type: 'varchar', length: 100, nullable: false})
+    @Column({type: 'varchar', length: 100, nullable: false, unique: true })
     name!: string
 
     @CreateDateColumn({type: 'timestamp'})
