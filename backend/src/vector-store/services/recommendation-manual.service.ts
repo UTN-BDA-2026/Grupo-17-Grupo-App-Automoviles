@@ -2,8 +2,8 @@ import { Injectable, Logger, NotFoundException } from '@nestjs/common';
 import * as fs from 'fs';
 import * as path from 'path';
 import * as crypto from 'crypto';
-import { RecommendationManualRepository, QueryResult, GetResult } from './recommendation-manual.repository';
-import { GeminiEmbeddingService } from '../embedding/gemini-embedding.service';
+import { RecommendationManualRepository, QueryResult, GetResult } from '../repositories/recommendation-manual.repository';
+import { GeminiEmbeddingService } from './gemini-embedding.service';
 
 interface DocumentChunk {
     id: string;
@@ -31,7 +31,7 @@ export class RecommendationManualService {
         private readonly embeddingService: GeminiEmbeddingService,
     ) {}
 
-    async sync(): Promise<SyncResult> {
+    public async sync(): Promise<SyncResult> {
         this.logger.log('Iniciando sincronización del manual de recomendación...');
 
         if (!fs.existsSync(this.documentPath)) {
@@ -60,12 +60,12 @@ export class RecommendationManualService {
         return { chunksProcessed: chunks.length, collectionName: 'recommendation_manual' };
     }
 
-    async query(question: string, limit = 5, filter?: Record<string, any>): Promise<QueryResult> {
+    public async query(question: string, limit = 5, filter?: Record<string, any>): Promise<QueryResult> {
         const queryEmbedding = await this.embeddingService.embedQuery(question);
         return this.repository.query(queryEmbedding, limit, filter);
     }
 
-    async find(filter: Record<string, any>): Promise<GetResult> {
+    public async find(filter: Record<string, any>): Promise<GetResult> {
         return this.repository.find(filter);
     }
 
@@ -81,13 +81,13 @@ export class RecommendationManualService {
         return { id };
     }
 
-    async drop(filter?: Record<string, any>): Promise<{ message: string }> {
+    public async drop(filter?: Record<string, any>): Promise<{ message: string }> {
         await this.repository.drop(filter);
         const scope = filter ? `con filtro ${JSON.stringify(filter)}` : 'completa';
         return { message: `Colección limpiada ${scope}` };
     }
 
-    async count(): Promise<{ count: number }> {
+    public async count(): Promise<{ count: number }> {
         const count = await this.repository.count();
         return { count };
     }

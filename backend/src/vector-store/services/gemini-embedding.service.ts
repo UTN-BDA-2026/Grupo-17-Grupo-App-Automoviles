@@ -17,7 +17,7 @@ export class GeminiEmbeddingService {
         this.model = genAI.getGenerativeModel({ model: 'gemini-embedding-2' });
     }
 
-    async embedQuery(text: string): Promise<number[]> {
+    public async embedQuery(text: string): Promise<number[]> {
         try {
             const result = await this.model.embedContent({
                 content: { parts: [{ text }], role: 'user' },
@@ -30,7 +30,7 @@ export class GeminiEmbeddingService {
         }
     }
 
-    async embedDocuments(texts: string[]): Promise<number[][]> {
+    public async embedDocuments(texts: string[]): Promise<number[][]> {
         if (texts.length === 0) return [];
         try {
             const result = await this.model.batchEmbedContents({

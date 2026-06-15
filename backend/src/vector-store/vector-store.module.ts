@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { GeminiEmbeddingService } from './embedding/gemini-embedding.service';
-import { RecommendationManualRepository } from './recommendation-manual/recommendation-manual.repository';
-import { RecommendationManualService } from './recommendation-manual/recommendation-manual.service';
+import { GeminiEmbeddingService } from './services/gemini-embedding.service';
+import { RecommendationManualRepository } from './repositories/recommendation-manual.repository';
+import { RecommendationManualService } from './services/recommendation-manual.service';
 import { VectorStoreController } from './vector-store.controller';
 
 @Module({

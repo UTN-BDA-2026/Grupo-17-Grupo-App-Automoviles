@@ -36,7 +36,7 @@ export class RecommendationManualRepository implements OnModuleInit {
         });
     }
 
-    async onModuleInit() {
+    public async onModuleInit() {
         try {
             this.collection = await this.client.getOrCreateCollection({
                 name: this.collectionName,
@@ -55,7 +55,7 @@ export class RecommendationManualRepository implements OnModuleInit {
         await this.collection.upsert({ ids, documents, embeddings, metadatas });
     }
 
-    async find(filter: Record<string, any>): Promise<GetResult> {
+    public async find(filter: Record<string, any>): Promise<GetResult> {
         const result = await this.collection.get({
             where: this.buildWhereClause(filter),
             include: [IncludeEnum.documents, IncludeEnum.metadatas],
@@ -82,7 +82,7 @@ export class RecommendationManualRepository implements OnModuleInit {
         };
     }
 
-    async drop(filter?: Record<string, any>): Promise<void> {
+    public async drop(filter?: Record<string, any>): Promise<void> {
         if (filter) {
             await this.collection.delete({ where: this.buildWhereClause(filter) });
             return;
@@ -91,16 +91,10 @@ export class RecommendationManualRepository implements OnModuleInit {
         this.collection = await this.client.createCollection({ name: this.collectionName });
     }
 
-    async count(): Promise<number> {
+    public async count(): Promise<number> {
         return this.collection.count();
     }
 
-    /**
-     * ChromaDB v3 solo admite una clave en el nivel raíz del `where`.
-     * Cuando el filtro tiene múltiples campos, los envuelve en `$and`.
-     * Ejemplo: { source: 'x', section_number: 3 }
-     *       → { $and: [{ source: 'x' }, { section_number: 3 }] }
-     */
     private buildWhereClause(filter: Record<string, any>): Record<string, any> {
         const entries = Object.entries(filter).filter(([, v]) => v !== undefined);
         if (entries.length === 1) return { [entries[0][0]]: entries[0][1] };
