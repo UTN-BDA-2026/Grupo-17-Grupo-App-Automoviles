@@ -1,9 +1,8 @@
-
 import { Module } from '@nestjs/common';
 import { BullModule } from '@nestjs/bullmq';
 import { ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { ConfigModule } from '@nestjs/config'
+import { ConfigModule } from '@nestjs/config';
 import { AuthModule } from './auth/auth.module';
 import { ProductsModule } from './products/products.module';
 import { UsersModule } from './users/users.module';
@@ -12,11 +11,12 @@ import { ScraperModule } from './scraper/scraper.module';
 import { dataSourceOptions } from './database/typeorm.config';
 import { VectorStoreModule } from './vector-store/vector-store.module';
 import { SchedulerModule } from './scheduler/scheduler.module';
+import { AgentModule } from './agent/agent.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
-      isGlobal: true
+      isGlobal: true,
     }),
     BullModule.forRootAsync({
       imports: [ConfigModule],
@@ -39,7 +39,8 @@ import { SchedulerModule } from './scheduler/scheduler.module';
     ChatModule,
     ScraperModule,
     VectorStoreModule,
-    SchedulerModule
+    SchedulerModule,
+    AgentModule,
   ],
 })
 export class AppModule {}
