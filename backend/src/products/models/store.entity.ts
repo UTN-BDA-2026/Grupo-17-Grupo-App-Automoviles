@@ -1,26 +1,30 @@
-
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, OneToMany } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  CreateDateColumn,
+  UpdateDateColumn,
+  OneToMany,
+} from 'typeorm';
 import { Link } from '../../scraper/models/link.entity';
 
 @Entity('stores')
 export class Store {
+  @PrimaryGeneratedColumn('uuid')
+  id!: string;
 
-    @PrimaryGeneratedColumn('uuid')
-    id!: string;
+  @Column({ type: 'varchar', length: 100 })
+  name!: string;
 
-    @Column({ type: 'varchar', length: 100 })
-    name!: string;
+  @Column({ type: 'varchar', length: 255, unique: true })
+  base_url!: string;
 
-    @Column({ type: 'varchar', length: 255, unique: true })
-    base_url!: string;
+  @CreateDateColumn({ type: 'timestamp' })
+  created_at!: Date;
 
-    @CreateDateColumn({ type: 'timestamp' })
-    created_at!: Date;
+  @UpdateDateColumn({ type: 'timestamp' })
+  updated_at!: Date;
 
-    @UpdateDateColumn({ type: 'timestamp' })
-    updated_at!: Date;
-
-    @OneToMany(() => Link, (links) => links.store)
-    links!: Link[];
-
+  @OneToMany(() => Link, (links) => links.store)
+  links!: Link[];
 }

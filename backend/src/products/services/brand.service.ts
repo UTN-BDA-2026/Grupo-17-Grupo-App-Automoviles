@@ -1,63 +1,58 @@
-
-import { Injectable, NotFoundException } from "@nestjs/common"
-import { Brand } from "../models/brand.entity"
-import { InjectRepository } from "@nestjs/typeorm"
-import { Repository, QueryDeepPartialEntity } from "typeorm"
-import { CreateBrandDTO } from "../dto/brand.dto"
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { Brand } from '../models/brand.entity';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository, QueryDeepPartialEntity } from 'typeorm';
+import { CreateBrandDTO } from '../dto/brand.dto';
 
 @Injectable()
 export class BrandService {
+  constructor(
+    @InjectRepository(Brand)
+    private readonly repository: Repository<Brand>,
+  ) {}
 
-    constructor(
-        @InjectRepository(Brand)
-        private readonly repository: Repository<Brand>
-    ) {}
+  public async get(): Promise<Brand[]> {
+    return await this.repository.find();
+  }
 
-    public async get() : Promise<Brand[]> {
-        return await this.repository.find()
+  public async getById(id: string): Promise<Brand | null> {
+    return await this.repository.findOneBy({
+      id: id,
+    });
+  }
+
+  public async getByName(name: string): Promise<Brand | null> {
+    return await this.repository.findOneBy({
+      name: name,
+    });
+  }
+
+  public async create(brand: CreateBrandDTO): Promise<Brand> {
+    const nuevo = this.repository.create(brand);
+    return await this.repository.save(nuevo);
+  }
+
+  public async update(
+    id: string,
+    brand: QueryDeepPartialEntity<Brand>,
+  ): Promise<Brand | null> {
+    const exist = await this.repository.findOneBy({ id: id });
+
+    if (!exist) {
+      throw new NotFoundException('The brand does not exits');
     }
 
-    public async getById(id: string) : Promise<Brand | null> {
+    await this.repository.update(id, brand);
+    return await this.repository.findOneBy({ id: id });
+  }
 
-        return await this.repository.findOneBy({
-            id: id
-        })
+  public async delete(id: string): Promise<Brand | null> {
+    const brand = await this.repository.findOneBy({ id: id });
+
+    if (!brand) {
+      throw new NotFoundException('The brand does not exits');
     }
 
-    public async getByName(name: string) : Promise<Brand | null> {
-
-        return await this.repository.findOneBy({
-            name: name
-        }) 
-    }
-
-    public async create(brand: CreateBrandDTO) : Promise<Brand> {
-        
-        const nuevo = this.repository.create(brand)
-        return await this.repository.save(nuevo) 
-    }
-
-    public async update(id: string, brand: QueryDeepPartialEntity<Brand>) : Promise<Brand | null> {
-    
-        const exist = await this.repository.findOneBy({ id: id })
-        
-        if (!exist) {
-            throw new NotFoundException('The brand does not exits')
-        }
-
-        await this.repository.update(id, brand);
-        return await this.repository.findOneBy({ id: id })
-    }
-
-    public async delete(id: string) : Promise<Brand | null> {
-        
-        const brand = await this.repository.findOneBy({ id: id })
-        
-        if (!brand) {
-            throw new NotFoundException('The brand does not exits')
-        }
-
-        return await this.repository.remove(brand)
-    }
-
+    return await this.repository.remove(brand);
+  }
 }
