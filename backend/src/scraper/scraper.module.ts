@@ -1,4 +1,3 @@
-
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ProductsModule } from '../products/products.module';
@@ -10,28 +9,26 @@ import { BullModule } from '@nestjs/bullmq';
 import { LinkService } from './services/link.service';
 import { Link } from './models/link.entity';
 
-
 @Module({
   imports: [
     ProductsModule,
     TypeOrmModule.forFeature([Link]),
     BullModule.registerQueue(
       {
-        name: 'discover-vehicles'
+        name: 'discover-vehicles',
       },
       {
-        name: 'scraping-vehicles'
-      })
+        name: 'scraping-vehicles',
+      },
+    ),
   ],
   providers: [
     ScraperService,
-    LinkService, 
+    LinkService,
     VehicleParserService,
     DiscoverScrapingWorker,
-    ConsumerScrapingWorker
+    ConsumerScrapingWorker,
   ],
-  exports: [
-    LinkService
-  ]
+  exports: [LinkService],
 })
 export class ScraperModule {}

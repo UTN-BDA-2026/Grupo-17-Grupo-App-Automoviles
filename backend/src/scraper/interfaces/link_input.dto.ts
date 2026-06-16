@@ -1,4 +1,3 @@
-
 export interface LinkInput {
-    link: string
+  link: string;
 }
