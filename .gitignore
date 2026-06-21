@@ -2,6 +2,7 @@
 # root
 
 .idea
+.claude
 
 # backend
 backend/node_modules
@@ -13,6 +14,9 @@ backend/chromadb/.env.test
 backend/redis/.env
 backend/.env
 backend/.env.test
+backend/backups/*.tar.gz
+backend/backups/*.tar
+backend/backups/*.enc
 backend/src/generated
 backend/dist
 backend/coverage-e2e
