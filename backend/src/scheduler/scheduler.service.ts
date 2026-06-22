@@ -1,5 +1,5 @@
 import { Injectable, Logger } from '@nestjs/common';
-import { Cron, SchedulerRegistry } from '@nestjs/schedule';
+import { Cron, CronExpression, SchedulerRegistry } from '@nestjs/schedule';
 import { Queue } from 'bullmq';
 import { InjectQueue } from '@nestjs/bullmq';
 import { DISCOVER_URLS } from '../scraper/constants/discorver-urls';
@@ -23,7 +23,7 @@ export class SchedulerService {
     private readonly schedulerRegistry: SchedulerRegistry,
   ) {}
 
-  @Cron('* * * 5 * *')
+  @Cron(CronExpression.EVERY_6_HOURS)
   public async discover() {
     const { base, name, links } = DISCOVER_URLS.mercado_libre;
     const remainingLinks = [...links];
@@ -55,7 +55,7 @@ export class SchedulerService {
     }
   }
 
-  @Cron('* * * 10 * *')
+  @Cron(CronExpression.EVERY_MINUTE)
   public async consumer() {
     let link: Link | null;
 
