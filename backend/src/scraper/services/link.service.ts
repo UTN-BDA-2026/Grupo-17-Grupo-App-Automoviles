@@ -10,7 +10,7 @@ export class LinkService {
   constructor(
     @InjectRepository(Link)
     private readonly repository: Repository<Link>,
-  ) {}
+  ) { }
 
   public async get(): Promise<Link[]> {
     return await this.repository.find();
@@ -63,7 +63,7 @@ export class LinkService {
       throw new NotFoundException('The link does not exits');
     }
 
-    await this.repository.update(url, link);
+    await this.repository.update({ url: url }, link);
     return await this.repository.findOneBy({ url: url });
   }
 

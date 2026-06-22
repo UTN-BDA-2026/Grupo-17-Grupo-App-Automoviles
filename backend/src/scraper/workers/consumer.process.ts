@@ -40,7 +40,11 @@ export class ConsumerScrapingWorker extends WorkerHost {
       await this.saveData(url, parsed_result);
 
       this.logger.log(`Vehicle listing was saved in database successfully`);
-    } catch (error: any) {
+    } 
+    catch (error: any) {
+      await this.linkService.updateByURL(url, {
+        status: LinkStatus.PENDIENTE,
+      });
       this.logger.error(error.message);
     }
   }

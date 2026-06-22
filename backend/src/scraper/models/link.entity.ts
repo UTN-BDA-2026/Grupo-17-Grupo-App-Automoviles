@@ -14,7 +14,7 @@ import { Store } from '../../products/models/store.entity';
 
 export enum LinkStatus {
   PENDIENTE = 'Pendiente',
-  PROCESANDO = 'Procensando',
+  PROCESANDO = 'Procesando',
   COMPLETADO = 'Completado',
 }
 
