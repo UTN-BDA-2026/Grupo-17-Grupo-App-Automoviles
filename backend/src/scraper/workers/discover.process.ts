@@ -55,7 +55,7 @@ export class DiscoverScrapingWorker extends WorkerHost {
     if (links) {
       for (const link of links) {
         const exist = await this.linkService.getByURL(link.link);
-        if (!exist) continue;
+        if (exist) continue;
 
         try {
           await this.linkService.create({
