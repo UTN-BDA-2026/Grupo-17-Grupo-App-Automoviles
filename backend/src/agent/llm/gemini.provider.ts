@@ -24,10 +24,11 @@ export class GeminiChatProvider {
       throw new Error('GEMINI_API_KEY no definida en las variables de entorno');
     this.apiKey = apiKey;
     this.mainModelName =
-      this.configService.get<string>('AGENT_LLM_MODEL') ?? 'gemini-2.0-flash';
+      this.configService.get<string>('AGENT_LLM_MODEL') ??
+      'gemini-3.1-flash-lite';
     this.fastModelName =
       this.configService.get<string>('AGENT_LLM_MODEL_FAST') ??
-      'gemini-2.0-flash';
+      'gemini-3.1-flash-lite';
   }
 
   /** Modelo principal para síntesis (mayor temperatura para tono conversacional). */
