@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AutoSearch — Buscá tu auto ideal</title>
+  <meta name="description" content="Buscá, compará y recibí recomendaciones de automóviles a través de un agente conversacional inteligente." />
+  <meta name="theme-color" content="#0f0f14" />
+
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/variables.css" />
+  <link rel="stylesheet" href="css/main.css" />
+  <link rel="stylesheet" href="css/auth.css" />
+  <link rel="stylesheet" href="css/chat.css" />
+  <link rel="stylesheet" href="css/catalog.css" />
+</head>
+<body>
+  <div id="app">
+
+    <!-- ═══════════ HEADER / NAV ═══════════ -->
+    <header class="app-header" id="app-header" style="display: none;">
+      <div class="app-header__brand">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M8.25 18.75a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 01-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h1.125c.621 0 1.129-.504 1.09-1.124a17.902 17.902 0 00-3.213-9.193 2.056 2.056 0 00-1.58-.86H14.25M16.5 18.75h-2.25m0-11.177v-.958c0-.568-.422-1.048-.987-1.106a48.554 48.554 0 00-10.026 0 1.106 1.106 0 00-.987 1.106v7.635m12-6.677v6.677m0 4.5v-4.5m0 0h-12" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span>AutoSearch</span>
+      </div>
+      <nav class="app-header__nav">
+        <button class="nav-btn" data-route="#/chat" id="nav-chat-btn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right:6px;vertical-align:middle;">
+            <path d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Chat
+        </button>
+        <button class="nav-btn" data-route="#/catalog" id="nav-catalog-btn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right:6px;vertical-align:middle;">
+            <path d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Catálogo
+        </button>
+        <button class="nav-btn nav-btn--logout" id="logout-btn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right:4px;vertical-align:middle;">
+            <path d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Salir
+        </button>
+      </nav>
+    </header>
+
+    <!-- ═══════════ AUTH VIEW ═══════════ -->
+    <section class="view auth-view" id="auth-view">
+      <div class="auth-card">
+        <div class="auth-card__logo">
+          <div class="auth-card__logo-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M8.25 18.75a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 01-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h1.125c.621 0 1.129-.504 1.09-1.124a17.902 17.902 0 00-3.213-9.193 2.056 2.056 0 00-1.58-.86H14.25M16.5 18.75h-2.25m0-11.177v-.958c0-.568-.422-1.048-.987-1.106a48.554 48.554 0 00-10.026 0 1.106 1.106 0 00-.987 1.106v7.635m12-6.677v6.677m0 4.5v-4.5m0 0h-12" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <h1>AutoSearch</h1>
+          <p>Tu asesor inteligente de automóviles</p>
+        </div>
+
+        <!-- Tabs -->
+        <div class="auth-tabs">
+          <button class="auth-tab active" data-tab="login">Iniciar sesión</button>
+          <button class="auth-tab" data-tab="register">Registrarse</button>
+        </div>
+
+        <!-- Messages -->
+        <div class="auth-error" id="auth-error"></div>
+        <div class="auth-success" id="auth-success"></div>
+
+        <!-- Form -->
+        <form class="auth-form" id="auth-form" autocomplete="off">
+          <div class="input-group">
+            <label for="auth-email">Email</label>
+            <input type="email" id="auth-email" class="input-field" placeholder="tu@email.com" required />
+          </div>
+          <div class="input-group">
+            <label for="auth-password">Contraseña</label>
+            <input type="password" id="auth-password" class="input-field" placeholder="Mínimo 8 caracteres" required minlength="8" />
+          </div>
+          <div class="auth-form__actions">
+            <button type="submit" class="btn btn-primary btn-block" id="auth-submit-btn">Iniciar sesión</button>
+          </div>
+          <div class="auth-form__link" id="auth-recovery-wrapper">
+            <a href="#" id="auth-recovery-link">¿Olvidaste tu contraseña?</a>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <!-- ═══════════ CHAT VIEW ═══════════ -->
+    <section class="view chat-view" id="chat-view">
+      <!-- Sidebar -->
+      <aside class="chat-sidebar" id="chat-sidebar">
+        <div class="chat-sidebar__header">
+          <button class="chat-sidebar__new-btn" id="chat-new-btn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 4.5v15m7.5-7.5h-15" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Nueva conversación
+          </button>
+        </div>
+        <div class="chat-sidebar__list" id="chat-session-list">
+          <!-- Sessions rendered by JS -->
+        </div>
+      </aside>
+
+      <!-- Main Chat -->
+      <div class="chat-main">
+        <!-- Mobile toggle -->
+        <div class="mobile-chat-header" id="mobile-chat-header">
+          <button class="chat-sidebar-toggle" id="chat-sidebar-toggle">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+        </div>
+
+        <!-- Welcome Screen -->
+        <div class="chat-welcome" id="chat-welcome">
+          <div class="chat-welcome__icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.455 2.456L21.75 6l-1.036.259a3.375 3.375 0 00-2.455 2.456zM16.894 20.567L16.5 21.75l-.394-1.183a2.25 2.25 0 00-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 001.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 001.423 1.423l1.183.394-1.183.394a2.25 2.25 0 00-1.423 1.423z" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <h2>Agente Recomendador</h2>
+          <p>Contame qué auto estás buscando y te voy a recomendar las mejores opciones del catálogo.</p>
+          <div class="chat-welcome__suggestions">
+            <button class="chat-welcome__suggestion">Busco un SUV familiar hasta $20M</button>
+            <button class="chat-welcome__suggestion">Quiero un auto económico a nafta</button>
+            <button class="chat-welcome__suggestion">Sedán automático para la ciudad</button>
+          </div>
+        </div>
+
+        <!-- Messages -->
+        <div class="chat-messages" id="chat-messages">
+          <!-- Messages rendered by JS -->
+        </div>
+
+        <!-- Typing indicator -->
+        <div class="typing-indicator" id="typing-indicator">
+          <div class="message__avatar" style="background:var(--color-bg-elevated);color:var(--color-accent-light);border:1px solid var(--color-surface-border);width:32px;height:32px;min-width:32px;border-radius:var(--radius-md);display:flex;align-items:center;justify-content:center;font-size:var(--font-size-sm);font-weight:700;">AI</div>
+          <div style="padding:var(--space-3) var(--space-4);background:var(--color-bg-tertiary);border:1px solid var(--color-surface-border);border-radius:var(--radius-lg);display:flex;align-items:center;gap:var(--space-3);">
+            <div class="typing-dots">
+              <span></span><span></span><span></span>
+            </div>
+            <span class="typing-indicator__text">Analizando tu consulta...</span>
+          </div>
+        </div>
+
+        <!-- Input -->
+        <div class="chat-input-area" id="chat-input-area" style="display: none;">
+          <div class="chat-input-wrapper">
+            <textarea class="chat-input" id="chat-input" placeholder="Escribí tu mensaje..." rows="1"></textarea>
+            <button class="chat-send-btn" id="chat-send-btn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════ CATALOG VIEW ═══════════ -->
+    <section class="view catalog-view" id="catalog-view">
+      <div class="catalog-topbar">
+        <h1 class="catalog-topbar__title">
+          Catálogo de Vehículos
+          <span class="catalog-topbar__count" id="catalog-count"></span>
+        </h1>
+      </div>
+      <div class="catalog-grid" id="catalog-grid">
+        <!-- Cards rendered by JS -->
+      </div>
+      <div class="pagination" id="catalog-pagination">
+        <!-- Pagination rendered by JS -->
+      </div>
+    </section>
+
+    <!-- ═══════════ VEHICLE DETAIL MODAL ═══════════ -->
+    <div class="modal-overlay hidden" id="vehicle-modal">
+      <div class="modal">
+        <div class="modal__header">
+          <h2 id="modal-title">Detalle del vehículo</h2>
+          <button class="modal__close" id="modal-close-btn">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M6 18L18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+        </div>
+        <div class="modal__body" id="modal-body">
+          <!-- Detail rendered by JS -->
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════ TOAST CONTAINER ═══════════ -->
+    <div class="toast-container" id="toast-container"></div>
+
+  </div>
+
+  <!-- Scripts (order matters) -->
+  <script src="js/api.js"></script>
+  <script src="js/router.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/chat.js"></script>
+  <script src="js/catalog.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
