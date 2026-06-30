@@ -43,10 +43,16 @@ Antes de empezar, asegurate de tener instalado en tu equipo:
 | --- | --- | --- |
 | **Node.js** | `22.14.0` o superior | `node -v` |
 | **Docker** (con Docker Compose v2) | `29.1.5` o superior | `docker -v` |
+| **MySQL** (imagen Docker) | `8.0` | `docker run --rm mysql:8.0 mysql --version` |
+| **Redis** (imagen Docker) | `8.2.3-alpine` | `docker run --rm redis:8.2.3-alpine redis-server --version` |
+| **ChromaDB** (imagen Docker) | `1.5.2` | `docker run --rm chromadb/chroma:1.5.2 --help` |
 
 > **Nota:** `npm` se instala junto con Node.js. Todos los comandos de este README se ejecutan desde
 > la carpeta `backend/` del proyecto, y Docker debe estar **en ejecución** antes de levantar los
 > servicios.
+
+> Estas versiones de MySQL, Redis y ChromaDB son las recomendadas porque son las que están definidas
+> en los archivos `docker-compose` del proyecto.
 
 ---
 
