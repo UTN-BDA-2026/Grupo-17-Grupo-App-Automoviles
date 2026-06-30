@@ -1,0 +1,275 @@
+/* ═══════════════════════════════════════════════════════
+   CATALOG VIEW — Vehicle Grid & Detail Modal
+   ═══════════════════════════════════════════════════════ */
+
+.catalog-view {
+  flex: 1;
+  flex-direction: column;
+  overflow-y: auto;
+  height: calc(100vh - var(--header-height));
+}
+
+/* ── Top Bar ── */
+.catalog-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-5) var(--space-6);
+  border-bottom: 1px solid var(--color-surface-border);
+  background: rgba(15, 15, 20, 0.6);
+  backdrop-filter: blur(12px);
+  position: sticky;
+  top: 0;
+  z-index: var(--z-sticky);
+}
+
+.catalog-topbar__title {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+}
+
+.catalog-topbar__count {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-tertiary);
+  font-weight: var(--font-weight-normal);
+  margin-left: var(--space-2);
+}
+
+/* ── Grid ── */
+.catalog-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-5);
+  padding: var(--space-6);
+  max-width: var(--max-content-width);
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* ── Vehicle Card ── */
+.vehicle-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-surface-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+  cursor: pointer;
+  transition: all var(--transition-base);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  animation: slideUp var(--transition-slow) ease-out;
+  animation-fill-mode: both;
+}
+.vehicle-card:hover {
+  border-color: var(--color-accent);
+  box-shadow: var(--shadow-md), 0 0 0 1px var(--color-accent-glow);
+  transform: translateY(-3px);
+}
+
+.vehicle-card__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.vehicle-card__brand {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-accent-light);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.vehicle-card__name {
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+  line-height: var(--line-height-tight);
+  margin-top: var(--space-1);
+}
+
+.vehicle-card__year {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-tertiary);
+  margin-top: var(--space-1);
+}
+
+.vehicle-card__price {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+}
+.vehicle-card__price-currency {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  font-weight: var(--font-weight-normal);
+  margin-left: var(--space-1);
+}
+
+.vehicle-card__specs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-2);
+}
+
+.vehicle-card__spec {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+}
+.vehicle-card__spec svg {
+  width: 14px;
+  height: 14px;
+  color: var(--color-text-tertiary);
+  flex-shrink: 0;
+}
+
+.vehicle-card__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-top: auto;
+}
+
+/* ── Detail Modal Content ── */
+.detail-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-4);
+}
+
+.detail-item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.detail-item__label {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: var(--font-weight-medium);
+}
+
+.detail-item__value {
+  font-size: var(--font-size-base);
+  color: var(--color-text-primary);
+  font-weight: var(--font-weight-medium);
+}
+
+.detail-section {
+  margin-top: var(--space-6);
+  padding-top: var(--space-6);
+  border-top: 1px solid var(--color-surface-border);
+}
+
+.detail-section__title {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+  margin-bottom: var(--space-4);
+}
+
+.detail-price-block {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+  margin-bottom: var(--space-6);
+  padding: var(--space-4);
+  background: var(--color-accent-subtle);
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(108, 92, 231, 0.15);
+}
+
+.detail-price-block__price {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+}
+
+.detail-price-block__currency {
+  font-size: var(--font-size-md);
+  color: var(--color-text-secondary);
+}
+
+.detail-link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-top: var(--space-6);
+  padding: var(--space-3) var(--space-5);
+  background: var(--color-accent);
+  color: #fff;
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  text-decoration: none;
+  transition: all var(--transition-fast);
+}
+.detail-link:hover {
+  background: #7c6df0;
+  box-shadow: var(--shadow-glow);
+  color: #fff;
+}
+
+/* ── Loading Skeleton ── */
+.catalog-skeleton {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-5);
+  padding: var(--space-6);
+  max-width: var(--max-content-width);
+  margin: 0 auto;
+  width: 100%;
+}
+
+.skeleton-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-surface-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+  height: 240px;
+}
+
+.skeleton-line {
+  height: 12px;
+  background: var(--color-bg-hover);
+  border-radius: var(--radius-sm);
+  margin-bottom: var(--space-3);
+  animation: pulse 1.5s ease-in-out infinite;
+}
+.skeleton-line--short { width: 40%; }
+.skeleton-line--medium { width: 70%; }
+.skeleton-line--long { width: 90%; }
+.skeleton-line--xl { height: 24px; width: 50%; margin-top: var(--space-4); }
+
+/* ── Responsive ── */
+@media (max-width: 1024px) {
+  .catalog-grid,
+  .catalog-skeleton {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .catalog-grid,
+  .catalog-skeleton {
+    grid-template-columns: 1fr;
+    padding: var(--space-4);
+  }
+
+  .catalog-topbar {
+    padding: var(--space-4);
+    flex-direction: column;
+    gap: var(--space-3);
+    align-items: flex-start;
+  }
+
+  .detail-grid {
+    grid-template-columns: 1fr;
+  }
+}
